@@ -51,11 +51,7 @@ if ($request === null) {
 
 (new RestockLead($this->osmium->dataSource))->create(productId: $request['productId'], email: $request['email']);
 
-$cookieSet = $sg->set(type: 'COOKIE', name: RestockPageData::COOKIE, value: (string) $request['productId']);
-if (!$cookieSet) {
-    $notice('failed', 'Please enable cookies/sessions in your browser to use this feature.');
-    $this->osmium->header->redirect(targetURL: $back, statusCode: 302);
-}
+RestockPageData::rememberRequest(session: $_SESSION, productId: $request['productId']); // In the session, so this service sets no cookie of its own
 
 $notice('sent', 'You will be notified when this product is back in stock.');
 $this->osmium->header->redirect(targetURL: $back, statusCode: 302);

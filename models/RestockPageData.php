@@ -9,20 +9,31 @@ namespace Osmium\Services\RestockLeads\Models;
  */
 class RestockPageData
 {
-    public const COOKIE = 'stockNotify';
     private const NOTICE_KEY = 'restock_notice';
+    private const REQUESTED_KEY = 'restock_requested';
 
     /**
-     * @param mixed $cookieValue The visitor's stockNotify cookie: the product they last asked about
+     * @param bool $requested Whether this visitor already asked about the product (see hasRequested())
      * @param array{status: string, message: string}|null $notice What happened to this visitor's own request, if anything
      * @return array{restockNotifySet: bool, restockNotice: ?array}
      */
-    public static function build(int $productId, mixed $cookieValue, ?array $notice): array
+    public static function build(bool $requested, ?array $notice): array
     {
         return [
-            'restockNotifySet' => $cookieValue !== null && (string) $cookieValue === (string) $productId,
+            'restockNotifySet' => $requested,
             'restockNotice' => $notice,
         ];
+    }
+
+    /** Remember in the session that this visitor asked to hear about the product (no cookie of our own) */
+    public static function rememberRequest(array &$session, int $productId): void
+    {
+        $session[self::REQUESTED_KEY][$productId] = true;
+    }
+
+    public static function hasRequested(array $session, int $productId): bool
+    {
+        return isset($session[self::REQUESTED_KEY][$productId]);
     }
 
     /** The visitor's own notice, read once: it is removed from the session */

@@ -10,7 +10,7 @@ namespace Osmium\Services\RestockLeads\Models;
 class RestockHooks
 {
     /**
-     * product.page.data: whether this visitor already asked about the product, and the one-time notice.
+     * product.page.data: whether this visitor already asked about the product this session, and the one-time notice.
      *
      * @param array{productId: int, dataSource: object} $payload
      */
@@ -20,8 +20,7 @@ class RestockHooks
         $notice = $hasSession ? RestockPageData::takeNotice($_SESSION) : null;
 
         return RestockPageData::build(
-            productId: (int) $payload['productId'],
-            cookieValue: $_COOKIE[RestockPageData::COOKIE] ?? null,
+            requested: $hasSession && RestockPageData::hasRequested($_SESSION, (int) $payload['productId']),
             notice: $notice,
         );
     }
