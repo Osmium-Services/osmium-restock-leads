@@ -1,7 +1,7 @@
 {
     "id": "osmium-restock-leads",
     "name": "Osmium Restock Leads",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Lets customers leave their email to hear when an out-of-stock product is back, collects those requests, and lists them in admin",
     "category": "shop",
     "author": {
@@ -11,7 +11,8 @@
     "requires": {
         "osmium": ">=1.0.0",
         "php": ">=8.1",
-        "services": []
+        "services": [],
+        "shop": true
     },
     "autoload": [
         "models"
