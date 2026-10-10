@@ -1,0 +1,16 @@
+<?php
+
+use Osmium\Modules\Admin\Core\ListView;
+
+require_once 'app/modules/admin/core/ListView.php';
+?>
+<h4 class="py-3 mb-4">
+    <span class="text-muted fw-light">Content / Shop /</span> Restock Leads
+</h4>
+
+<?= ListView::render($admin['lists']['leads'], $admin['restockLeads'], [
+    'adminUrl' => $adminUrl,
+    'isAdmin' => $admin['isAdmin'],
+]) ?>
+
+<script src="/assets/admin/js/list-view.js<?= $adminAssetVersion('/assets/admin/js/list-view.js') ?>"></script>
