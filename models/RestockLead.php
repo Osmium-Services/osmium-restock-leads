@@ -27,6 +27,18 @@ class RestockLead extends Model
         )->execute();
     }
 
+    /** @return array<int, array<string, mixed>> Open requests per product with the product's state, most customers first. No emails. */
+    public function demand(): array
+    {
+        return $this->database->prepare(sql: $this->loadSqlFile('restock-lead-demand.sql'), bindings: [])->resultset();
+    }
+
+    /** @return array<string, mixed> requests, customers and products over every open request. No emails. */
+    public function totals(): array
+    {
+        return $this->database->prepare(sql: $this->loadSqlFile('restock-lead-totals.sql'), bindings: [])->single() ?: [];
+    }
+
     /** @return array<int, array<string, mixed>> Every live lead with its product, newest first */
     public function listAll(): array
     {

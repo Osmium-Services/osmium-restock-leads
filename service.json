@@ -1,7 +1,7 @@
 {
     "id": "osmium-restock-leads",
     "name": "Osmium Restock Leads",
-    "version": "0.1.2",
+    "version": "0.2.0",
     "description": "Lets customers leave their email to hear when an out-of-stock product is back, collects those requests, and lists them in admin",
     "category": "shop",
     "author": {
@@ -21,6 +21,9 @@
     "hooks": {
         "product.page.data": [
             "Osmium\\Services\\RestockLeads\\Models\\RestockHooks::productPageData"
+        ],
+        "mcp.tools": [
+            "Osmium\\Services\\RestockLeads\\Models\\RestockMcp::tools"
         ]
     },
     "admin": {
