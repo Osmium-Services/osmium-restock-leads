@@ -1,12 +1,16 @@
 <?php
 
+use Osmium\Core\Library\ServiceHooks;
+use Osmium\Core\Library\ServiceLoader;
+use Osmium\Core\Models\ServiceModel;
 use Osmium\Services\RestockLeads\Models\RestockLead;
 use Osmium\Services\RestockLeads\Models\RestockPageData;
+use Osmium\Services\RestockLeads\Models\RestockProtection;
 use Osmium\Services\RestockLeads\Models\RestockRequest;
 
 /**
  * Notify-me endpoint (POST /api/restock-leads). Fields: email, pid, plus the form's token and the zip
- * honeypot. The visitor is always sent back to the page they came from (or the shop), with a one-time
+ * honeypot, and the answer of any bot protection installed (form.verify). The visitor is always sent back to the page they came from (or the shop), with a one-time
  * restockNotice for the theme to show.
  */
 
@@ -37,9 +41,14 @@ $submittedTooFast = $secondsSinceTokenIssued < 4;
 
 unset($_SESSION['token'], $_SESSION['token_issued_at']); // One token, one submission
 
-$looksLikeABot = $botDetected || !$tokenIsValid || $submittedTooFast;
+// Any installed bot protection answers the form.verify hook; this service never names one
+$protectionAnswers = (new ServiceHooks(new ServiceLoader(new ServiceModel($this->osmium->dataSource))))
+    ->collect('form.verify', ['form' => 'restock', 'post' => $_POST, 'dataSource' => $this->osmium->dataSource]);
+$protectionFailed = !RestockProtection::passed($protectionAnswers);
+
+$looksLikeABot = $botDetected || !$tokenIsValid || $submittedTooFast || $protectionFailed;
 if ($looksLikeABot) {
-    $notice('failed', 'Your request could not be sent. Please try again');
+    $notice('failed', RestockRequest::TECHNICAL_PROBLEM); // Never say which check failed
     $this->osmium->header->redirect(targetURL: $back, statusCode: 302);
 }
 

@@ -9,6 +9,9 @@ namespace Osmium\Services\RestockLeads\Models;
  */
 class RestockRequest
 {
+    /** Shown for every bot-check refusal, so a bot never learns which check failed */
+    public const TECHNICAL_PROBLEM = 'There was a technical problem sending your request. Please try again later';
+
     /**
      * @param array{email?: mixed, pid?: mixed} $input
      * @return array{email: string, productId: int}|null Null when the email or product id is not usable
