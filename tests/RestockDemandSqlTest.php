@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Services\RestockLeads;
 
 use Osmium\Services\RestockLeads\Models\RestockLead;
-use Tests\Integration\DatabaseTestCase;
+use Tests\Helpers\ShopDatabaseTestCase;
 
 require_once __DIR__ . '/../models/RestockLead.php';
 
@@ -13,7 +13,7 @@ require_once __DIR__ . '/../models/RestockLead.php';
  * The SQL behind restock_demand, run against real rows: closed requests do not count, the same email in a
  * different letter case is one customer, and each product carries its current stock state.
  */
-class RestockDemandSqlTest extends DatabaseTestCase
+class RestockDemandSqlTest extends ShopDatabaseTestCase
 {
     private RestockLead $leads;
 
