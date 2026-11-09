@@ -1,7 +1,7 @@
 # Osmium Restock Leads service
 
 Lets customers leave an email to hear when an out-of-stock product is back, collects those requests and lists them in
-admin. Repo `Osmium-Services/osmium-restock-leads`, v0.2.2<!--v:osmium-restock-leads-->, category shop. Extracted 2026-10-10. See [[Core and Services]].
+admin. Repo `Osmium-Services/osmium-restock-leads`, v0.3.1<!--v:osmium-restock-leads-->, category shop. Extracted 2026-10-10. See [[Core and Services]].
 
 ## What it does
 
