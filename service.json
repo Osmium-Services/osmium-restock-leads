@@ -1,7 +1,7 @@
 {
     "id": "osmium-restock-leads",
     "name": "Osmium Restock Leads",
-    "version": "0.3.1",
+    "version": "0.4.0",
     "description": "Lets customers leave their email to hear when an out-of-stock product is back, collects those requests, and lists them in admin",
     "category": "shop",
     "author": {
@@ -34,7 +34,9 @@
                     "label": "Restock Leads",
                     "icon": "bx bx-bell",
                     "color": "#ffd60a",
-                    "placement": "top",
+                    "placement": "group",
+                    "group": "shop",
+                    "order": 100,
                     "route": "admin/restock-leads",
                     "activePattern": "admin/restock-leads*",
                     "role": null
