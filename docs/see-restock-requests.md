@@ -1,6 +1,7 @@
 ---
 title: See who wants to know when a product is back
 tags: restock, back in stock, out of stock, notify me, email, leads, demand
+page: admin/restock-leads
 ---
 
 When a product is out of stock, customers can leave their email address to hear when it is back. **Restock Leads** lists those requests.
